@@ -36,6 +36,7 @@ extension UserService on APIService {
     required String name,
     required String dateOfBirth,
     required String email,
+    required String avatar
 
   }) async {
 
@@ -43,6 +44,7 @@ extension UserService on APIService {
       "name": name,
       "dateOfBirth": dateOfBirth,
       "email": email,
+      "avatar": avatar,
     };
     final result = await request(
       path: '/user/$id',

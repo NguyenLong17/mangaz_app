@@ -1,8 +1,10 @@
 import 'package:flutter/material.dart';
+import 'package:manga_app/common/hive_manager.dart';
 import 'package:manga_app/page/categories/categories_page.dart';
 import 'package:manga_app/page/manga/home_page.dart';
 import 'package:manga_app/page/account/profile_page.dart';
 import 'package:manga_app/page/search_page.dart';
+import 'package:manga_app/service/api_service.dart';
 
 class BottomNavigationBarPage extends StatefulWidget {
   const BottomNavigationBarPage({Key? key}) : super(key: key);
@@ -21,6 +23,7 @@ class _BottomNavigationBarPageState extends State<BottomNavigationBarPage>
   @override
   void initState() {
     createListPage();
+    hive.getValue(userKey);
     super.initState();
   }
 

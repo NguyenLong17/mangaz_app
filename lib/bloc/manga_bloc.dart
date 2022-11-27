@@ -1,8 +1,4 @@
 import 'dart:async';
-import 'dart:js';
-import 'package:flutter/material.dart';
-import 'package:manga_app/common/widgets/progress_dialog.dart';
-import 'package:manga_app/common/widgets/toast_overlay.dart';
 import 'package:manga_app/model/manga.dart';
 import 'package:manga_app/service/api_service.dart';
 import 'package:manga_app/service/manga_service.dart';

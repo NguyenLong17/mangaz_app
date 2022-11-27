@@ -1,6 +1,7 @@
 import 'dart:async';
 import 'dart:convert';
 
+import 'package:manga_app/common/hive_manager.dart';
 import 'package:manga_app/model/manga.dart';
 import 'package:manga_app/service/api_service.dart';
 
@@ -41,17 +42,18 @@ class MangaDetailBloc {
 
   void addMangaFavorite(Manga manga) {
 
-    apiService.user?.mangafavorite?.add(manga);
+    manga.favorite  = !manga.favorite!;
+    _mangaDetailStreamController.add(manga.favorite!);
 
-    print('manga bloc: ${apiService.user?.mangafavorite?.length}');
+    if(manga.favorite == false) {
+      apiService.user?.mangafavorite?.remove(manga);
+    } else {
+      apiService.user?.mangafavorite?.add(manga);
+    }
+
+    hive.setValue(userKey, apiService.user);
+
     _mangaDetailFavoriteStreamController.add(apiService.user?.mangafavorite ?? [] );
-
-
-    // String dataString = jsonEncode(manga);
-    // mangaFavorite.add(dataString);
-    // hive.setValue(mangaFavoriteKey, mangaFavorite);
-
-    // print('Manga Favorite: ${apiService.mangaFavorite.length} ');
   }
 
 }

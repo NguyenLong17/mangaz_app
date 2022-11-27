@@ -116,10 +116,39 @@ class _MangaDetailPageState extends State<MangaDetailPage>
                 const SizedBox(
                   height: 16,
                 ),
-                Text(
-                  'Tác giả: ${widget.manga.author}',
-                  style: const TextStyle(
-                      fontSize: 20, fontWeight: FontWeight.w600),
+                Row(
+                  children: [
+                    Expanded(
+                      flex: 5,
+                      child: Text(
+                        'Tác giả: ${widget.manga.author}',
+                        style: const TextStyle(
+                            fontSize: 20, fontWeight: FontWeight.w600),
+                      ),
+                    ),
+                    Expanded(
+                      flex: 1,
+                      child: GestureDetector(
+                        onTap: () {
+                          mangaDetailBloc.addMangaFavorite(widget.manga);
+                          print('_MangaDetailPageState.buildMangaDetail: ${apiService.user?.mangafavorite?.length}');
+                          ToastOverlay(context).showToastOverlay(
+                              message: 'Theo dõi thành công',
+                              type: ToastType.success);
+                        },
+                        child: widget.manga.favorite ?? false
+                            ? const Icon(
+                          Icons.favorite_outlined,
+                          size: 58,
+                          color: Colors.pink,
+                        )
+                            : const Icon(
+                          Icons.favorite_border,
+                          size: 58,
+                        ),
+                      ),
+                    ),
+                  ],
                 ),
                 const SizedBox(
                   height: 16,
@@ -193,44 +222,21 @@ class _MangaDetailPageState extends State<MangaDetailPage>
                 const SizedBox(
                   height: 16,
                 ),
-                Row(
-                  children: [
-                    const Text(
-                      'Theo dõi:',
-                      style: TextStyle(
-                        fontWeight: FontWeight.w600,
-                        fontSize: 20,
-                      ),
-                    ),
-                    GestureDetector(
-                      onTap: () {
-                        mangaDetailBloc.checkFavorite();
-                        // addMangaFavorite(widget.manga);
-                        mangaDetailBloc.addMangaFavorite(widget.manga);
-                        // apiService.user?.mangafavorite?.add(widget.manga);
-                        print(
-                            'list manga bloc: ${apiService.user?.mangafavorite?.length}');
-                        // hive.setValue(userKey, apiService.user);
-                        ToastOverlay(context).showToastOverlay(
-                            message: 'Theo dõi thành công',
-                            type: ToastType.success);
-                      },
-                      child: mangaDetailBloc.isFavorite
-                          ? const Icon(
-                              Icons.favorite_outlined,
-                              size: 58,
-                              color: Colors.pink,
-                            )
-                          : const Icon(
-                              Icons.favorite_border,
-                              size: 58,
-                            ),
-                    ),
-                  ],
-                ),
-                const SizedBox(
-                  height: 16,
-                ),
+                // Row(
+                //   children: [
+                //     const Text(
+                //       'Theo dõi:',
+                //       style: TextStyle(
+                //         fontWeight: FontWeight.w600,
+                //         fontSize: 20,
+                //       ),
+                //     ),
+                //
+                //   ],
+                // ),
+                // const SizedBox(
+                //   height: 16,
+                // ),
                 MyButton(
                     textButton: 'Đọc truyện',
                     backgroundColor: Colors.red,

@@ -40,12 +40,8 @@ class HiveManager {
     final box = Hive.box(_currentBox);
     await  box.delete(userKey);
   }
-
-
 }
 
 const userKey = 'userKey';
-const mangaFavoriteKey = 'mangaFavorite';
-
 
 final hive = HiveManager();

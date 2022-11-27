@@ -24,8 +24,6 @@ class _ProfilePageState extends State<ProfilePage> {
   List<Manga>? listMangaFavorite = apiService.user?.mangafavorite;
   int? countManga;
 
-  late AccountBloc accountBloc;
-  // late MangaDetailBloc mangaDetailBloc;
 
 
   String? name;
@@ -33,8 +31,7 @@ class _ProfilePageState extends State<ProfilePage> {
 
   @override
   void initState() {
-    accountBloc = AccountBloc();
-    // mangaDetailBloc = MangaDetailBloc();
+    apiAccountBloc.getProfile();
     super.initState();
   }
 
@@ -65,7 +62,7 @@ class _ProfilePageState extends State<ProfilePage> {
 
   Widget buildProfile() {
     return StreamBuilder<User>(
-        stream: accountBloc.userStream,
+        stream: apiAccountBloc.userStream,
         builder: (context, snapshot) {
           final user = snapshot.data;
           return Container(
@@ -181,9 +178,6 @@ class _ProfilePageState extends State<ProfilePage> {
   }
 
   Widget buildListFavoriteManga() {
-    // var mangas = snapshot.data ?? [];
-    // print('list manga F: ${mangas.length}');
-
     return Container(
       // alignment: Alignment.topLeft,
       height: 256,
@@ -201,56 +195,28 @@ class _ProfilePageState extends State<ProfilePage> {
             'Danh sách truyện yêu thích',
             style: TextStyle(fontWeight: FontWeight.w600),
           ),
-          IconButton(
-              onPressed: () {
-                setState(() {});
-              },
-              icon: const Icon(Icons.cloud_download)),
           const SizedBox(
             height: 16,
           ),
-
-          // Expanded(
-          //   child: ListView.separated(
-          //     scrollDirection: Axis.horizontal,
-          //     itemBuilder: (context, index) {
-          //       final manga = apiService.user?.mangafavorite?[index];
-          //       return buildFavoriteManga(manga ?? Manga());
-          //     },
-          //     separatorBuilder: (BuildContext context, int index) {
-          //       return const SizedBox(
-          //         width: 8,
-          //       );
-          //     },
-          //     itemCount: apiService.user?.mangafavorite?.length ?? 0,
-          //   ),
-          // ),
-
           StreamBuilder<List<Manga>>(
             stream: apiMangaDetailBloc.mangaDetailFavoriteStream,
             builder: (context, snapshot) {
-              print('_ProfilePageState.buildListFavoriteManga: mangaF: ${snapshot.data?.length}');
-
-              if (snapshot.hasData) {
-                 List<Manga>? mangaFs = snapshot.data;
-                print('MangaFS = ${mangaFs!.length}');
+              List<Manga>? mangaFs = apiService.user?.mangafavorite;
                 return Expanded(
                   child: ListView.separated(
                     scrollDirection: Axis.horizontal,
                     itemBuilder: (context, index) {
-                      final manga = mangaFs[index];
-                      return buildFavoriteManga(manga);
+                      final manga = mangaFs?[index];
+                      return buildFavoriteManga(manga ?? Manga());
                     },
                     separatorBuilder: (BuildContext context, int index) {
                       return const SizedBox(
                         width: 8,
                       );
                     },
-                    itemCount: mangaFs.length,
+                    itemCount: mangaFs?.length ?? 0,
                   ),
                 );
-              }
-              return Container();
             },
           ),
         ],

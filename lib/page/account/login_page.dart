@@ -203,9 +203,11 @@ class _LoginPageState extends State<LoginPage> {
         .then((user) {
 
       hive.setValue(userKey, user);
+
       ToastOverlay(context).showToastOverlay(
           message: 'Login Success, Hi: ${user.name}',
           type: ToastType.success);
+
       navigatorPushAndRemoveUntil(context, BottomNavigationBarPage());
     }).catchError((e) {
       ToastOverlay(context).showToastOverlay(
