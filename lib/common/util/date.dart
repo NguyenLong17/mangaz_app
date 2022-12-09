@@ -1,9 +1,9 @@
 import 'package:intl/intl.dart';
 
 DateTime? dateFromString(
-    String value, {
-      String format = 'dd/MM/yyyy HH:mm',
-    }) {
+  String value, {
+  String format = 'dd/MM/yyyy HH:mm',
+}) {
   try {
     return DateFormat(format).parse(value);
   } catch (e) {
@@ -12,10 +12,10 @@ DateTime? dateFromString(
 }
 
 String stringFromDate(
-    DateTime value, {
-      String format = 'dd/MM/yyyy HH:mm',
-      String? locale,
-    }) {
+  DateTime value, {
+  String format = 'dd/MM/yyyy HH:mm',
+  String? locale,
+}) {
   try {
     return DateFormat(format, locale).format(value);
   } catch (e) {
@@ -24,22 +24,22 @@ String stringFromDate(
 }
 
 String stringDateFromString(
-    String value, {
-      String fromFormat = 'dd/MM/yyyy HH:mm',
-      String toFormat = 'dd/MM/yyyy HH:mm',
-      String? locale,
-    }) {
+  String value, {
+  String fromFormat = 'dd/MM/yyyy HH:mm',
+  String toFormat = 'dd/MM/yyyy HH:mm',
+  String? locale,
+}) {
   final date = dateFromString(value, format: fromFormat);
   if (date != null) return stringFromDate(date, locale: locale);
   return value;
 }
 
 String? dayOfWeekFromString(
-    String value, {
-      String fromFormat = 'dd/MM/yyyy HH:mm',
-      String toFormat = 'EEEE',
-      String? locale,
-    }) {
+  String value, {
+  String fromFormat = 'dd/MM/yyyy HH:mm',
+  String toFormat = 'EEEE',
+  String? locale,
+}) {
   final date = dateFromString(value, format: fromFormat);
   if (date != null) return DateFormat(toFormat, locale).format(date);
   return null;

@@ -10,8 +10,8 @@ import 'package:manga_app/model/manga.dart';
 import 'package:manga_app/model/user.dart';
 import 'package:manga_app/page/account/change_profile.dart';
 import 'package:manga_app/page/account/login_page.dart';
+import 'package:manga_app/page/manga/manga_detail_page.dart';
 import 'package:manga_app/service/api_service.dart';
-import 'package:manga_app/service/user_service.dart';
 
 class ProfilePage extends StatefulWidget {
   const ProfilePage({Key? key}) : super(key: key);
@@ -76,35 +76,21 @@ class _ProfilePageState extends State<ProfilePage> {
                   // crossAxisAlignment: CrossAxisAlignment.center,
                   mainAxisAlignment: MainAxisAlignment.start,
                   children: [
-                    Stack(
-                      children: [
-                        ClipRRect(
-                          borderRadius: BorderRadius.circular(50),
-                          child: Container(
-                            height: 100,
-                            width: 100,
-                            color: Colors.grey.shade200,
-                            child: CachedNetworkImage(
-                              imageUrl: user?.avatar ?? '',
-                              placeholder: (context, url) =>
-                                  const CircularProgressIndicator(),
-                              errorWidget: (context, url, error) =>
-                                  const Icon(Icons.error),
-                              fit: BoxFit.cover,
-                            ),
-                          ),
+                    ClipRRect(
+                      borderRadius: BorderRadius.circular(50),
+                      child: Container(
+                        height: 100,
+                        width: 100,
+                        color: Colors.grey.shade200,
+                        child: CachedNetworkImage(
+                          imageUrl: user?.avatar ?? '',
+                          placeholder: (context, url) =>
+                              const CircularProgressIndicator(),
+                          errorWidget: (context, url, error) =>
+                              const Icon(Icons.error),
+                          fit: BoxFit.cover,
                         ),
-                        Positioned(
-                          right: -10,
-                          bottom: -10,
-                          child: IconButton(
-                            onPressed: () {
-                              // selectImage(source: ImageSource.gallery);
-                            },
-                            icon: const Icon(Icons.camera_alt),
-                          ),
-                        )
-                      ],
+                      ),
                     ),
                     const SizedBox(
                       width: 28,
@@ -207,7 +193,10 @@ class _ProfilePageState extends State<ProfilePage> {
                     scrollDirection: Axis.horizontal,
                     itemBuilder: (context, index) {
                       final manga = mangaFs?[index];
-                      return buildFavoriteManga(manga ?? Manga());
+                      return GestureDetector(onTap: () {
+                        navigatorPush(context, MangaDetailPage(manga: manga ?? Manga()));
+                      }
+                          ,child: buildFavoriteManga(manga ?? Manga()));
                     },
                     separatorBuilder: (BuildContext context, int index) {
                       return const SizedBox(
@@ -233,7 +222,7 @@ class _ProfilePageState extends State<ProfilePage> {
         children: [
           Expanded(
             flex: 5,
-            child: Container(
+            child: SizedBox(
               width: double.infinity,
               child: CachedNetworkImage(
                 imageUrl: manga.avatar ?? '',

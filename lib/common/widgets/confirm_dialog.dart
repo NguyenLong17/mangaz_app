@@ -81,23 +81,28 @@ class _DialogConfirmState extends State<DialogConfirm> {
                   onPressed: () {
                     Navigator.of(context).pop();
                   },
-                  child: const Text('Cancel', style: TextStyle(
-                    fontWeight: FontWeight.bold,
-                  ),),
+                  child: const Text(
+                    'Cancel',
+                    style: TextStyle(
+                      fontWeight: FontWeight.bold,
+                    ),
+                  ),
                 ),
               ),
-              const SizedBox(width: 16,),
+              const SizedBox(
+                width: 16,
+              ),
               Expanded(
                 child: ElevatedButton(
                   onPressed: () {
                     widget.onConfirm();
                   },
-                    child: const Text(
-                      'Yes',
-                      style: TextStyle(
-                        fontWeight: FontWeight.bold,
-                      ),
+                  child: const Text(
+                    'Yes',
+                    style: TextStyle(
+                      fontWeight: FontWeight.bold,
                     ),
+                  ),
                 ),
               )
             ],
@@ -106,7 +111,4 @@ class _DialogConfirmState extends State<DialogConfirm> {
       ),
     );
   }
-
 }
-
-

@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:manga_app/bloc/history_reading_bloc.dart';
 import 'package:manga_app/bloc/manga_bloc.dart';
 import 'package:manga_app/common/util/navigator.dart';
 import 'package:manga_app/model/manga.dart';
@@ -16,12 +17,15 @@ class HomePage extends StatefulWidget {
 
 class _HomePageState extends State<HomePage> {
   late MangaBloc mangaBloc;
-
-
+  late HistoryReadingBloc historyReadingBloc;
 
   @override
   void initState() {
     mangaBloc = MangaBloc();
+    historyReadingBloc = HistoryReadingBloc();
+    apiMangaBloc.getMangas();
+    apiMangaBloc.getMangaHot();
+
     super.initState();
   }
 
@@ -33,7 +37,6 @@ class _HomePageState extends State<HomePage> {
         headerSliverBuilder: (BuildContext context, bool innerBoxIsScrolled) {
           return <Widget>[
             SliverAppBar(
-
               backgroundColor: Colors.brown.shade500,
               floating: true,
               pinned: false,
@@ -69,24 +72,24 @@ class _HomePageState extends State<HomePage> {
           ];
         },
         body: SingleChildScrollView(
-          padding: EdgeInsets.all(16),
+          padding: const EdgeInsets.all(16),
           child: Column(
             children: [
-              Text(
+              const Text(
                 'Truyện Hot mỗi ngày',
                 style: TextStyle(
                   fontWeight: FontWeight.w600,
                   fontSize: 20,
                 ),
               ),
-              SizedBox(
+              const SizedBox(
                 height: 16,
               ),
               StreamBuilder<List<Manga>>(
                 stream: mangaBloc.mangaHotStream,
                 builder: (context, snapshot) {
-                  return Container(
-                    height: 200,
+                  return SizedBox(
+                    height: 256,
                     child: ListView.separated(
                       scrollDirection: Axis.horizontal,
                       itemBuilder: (context, index) {
@@ -94,20 +97,21 @@ class _HomePageState extends State<HomePage> {
 
                         return GestureDetector(
                           onTap: () {
-                            apiService.getMangaDetail(idManga: mangaHot.id ?? '0');
+                            apiHistoryReadingBloc.addMangaHistory(mangaHot);
+                            apiService.getMangaDetail(
+                                idManga: mangaHot.id ?? '0');
                             navigatorPush(
                                 context,
                                 MangaDetailPage(
                                   manga: mangaHot,
                                 ));
                           },
-
-                          child: Container(
-                              width: 150,
+                          child: SizedBox(
+                              width: 172,
                               child: Stack(
                                 children: [
                                   ItemManga(manga: mangaHot),
-                                  Positioned(
+                                  const Positioned(
                                     top: 0,
                                     right: 5,
                                     child: Icon(
@@ -120,35 +124,62 @@ class _HomePageState extends State<HomePage> {
                         );
                       },
                       separatorBuilder: (BuildContext context, int index) =>
-                      const SizedBox(
+                          const SizedBox(
                         width: 8,
                       ),
                       itemCount: mangaBloc.listMangaHot.length,
                     ),
                   );
-                }
+                },
               ),
-              SizedBox(
-                height: 16,
+              const SizedBox(
+                height: 8,
               ),
-              Text(
+              const Divider(
+                color: Colors.black12,
+              ),
+              const SizedBox(
+                height: 8,
+              ),
+              const Text(
+                'Lịch sử đọc truyện',
+                style: TextStyle(
+                  fontWeight: FontWeight.w600,
+                  fontSize: 20,
+                ),
+              ),
+              const SizedBox(
+                height: 8,
+              ),
+              buildMangaHistory(),
+              const SizedBox(
+                height: 8,
+              ),
+              const Divider(
+                color: Colors.black12,
+              ),
+              const SizedBox(
+                height: 8,
+              ),
+              const Text(
                 'Danh sách truyện',
                 style: TextStyle(
                   fontWeight: FontWeight.w600,
                   fontSize: 20,
                 ),
               ),
-              SizedBox(
+              const SizedBox(
                 height: 16,
               ),
               StreamBuilder<List<Manga>>(
                 stream: mangaBloc.mangaStream,
                 builder: (context, snapshot) {
-                  if(snapshot.hasData) {
+                  if (snapshot.hasData) {
                     final mangas = snapshot.data ?? [];
                     return GridView.builder(
                       shrinkWrap: true,
-                      gridDelegate: SliverGridDelegateWithFixedCrossAxisCount(
+                      gridDelegate:
+                          const SliverGridDelegateWithFixedCrossAxisCount(
                         crossAxisCount: 2,
                         mainAxisSpacing: 4,
                         crossAxisSpacing: 4,
@@ -158,6 +189,8 @@ class _HomePageState extends State<HomePage> {
                         return GestureDetector(
                           onTap: () {
                             apiService.getMangaDetail(idManga: manga.id ?? '0');
+                            apiHistoryReadingBloc.addMangaHistory(manga);
+
                             navigatorPush(
                                 context,
                                 MangaDetailPage(
@@ -171,12 +204,83 @@ class _HomePageState extends State<HomePage> {
                     );
                   }
                   return Container();
-                }
+                },
               ),
             ],
           ),
         ),
       ),
+    );
+  }
+
+  Widget buildMangaHistory() {
+    return StreamBuilder<List<Manga>>(
+      stream: historyReadingBloc.historyReadingStream,
+      builder: (context, snapshot) {
+        final mangasHistory = apiHistoryReadingBloc.listMangaHistory;
+        if (mangasHistory.isEmpty) {
+          return const Center(
+            child: Text('Hãy khám phá nhiều truyện hay hơn!'),
+          );
+        } else if (mangasHistory.isNotEmpty && mangasHistory.length < 6) {
+          return SizedBox(
+            height: 256,
+            child: ListView.separated(
+              scrollDirection: Axis.horizontal,
+              itemBuilder: (context, index) {
+                final mangaHistory = mangasHistory[index];
+                return GestureDetector(
+                  onTap: () {
+                    apiService.getMangaDetail(idManga: mangaHistory.id ?? '0');
+                    navigatorPush(
+                        context,
+                        MangaDetailPage(
+                          manga: mangaHistory,
+                        ));
+                  },
+                  child: SizedBox(
+                    width: 172,
+                    child: ItemManga(manga: mangaHistory),
+                  ),
+                );
+              },
+              separatorBuilder: (BuildContext context, int index) =>
+                  const SizedBox(
+                width: 8,
+              ),
+              itemCount: mangasHistory.length,
+            ),
+          );
+        }
+        return SizedBox(
+          height: 256,
+          child: ListView.separated(
+            scrollDirection: Axis.horizontal,
+            itemBuilder: (context, index) {
+              final mangaHistory = mangasHistory[index];
+              return GestureDetector(
+                onTap: () {
+                  apiService.getMangaDetail(idManga: mangaHistory.id ?? '0');
+                  navigatorPush(
+                      context,
+                      MangaDetailPage(
+                        manga: mangaHistory,
+                      ));
+                },
+                child: SizedBox(
+                  width: 172,
+                  child: ItemManga(manga: mangaHistory),
+                ),
+              );
+            },
+            separatorBuilder: (BuildContext context, int index) =>
+                const SizedBox(
+              width: 8,
+            ),
+            itemCount: 5,
+          ),
+        );
+      },
     );
   }
 }

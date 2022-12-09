@@ -10,13 +10,13 @@ class ItemManga extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Container(
-      padding: const EdgeInsets.symmetric(horizontal: 10, vertical: 4),
+      padding: const EdgeInsets.symmetric(horizontal: 10, vertical: 6),
       child: Column(
         crossAxisAlignment: CrossAxisAlignment.start,
         children: [
           Expanded(
             flex: 5,
-            child: Container(
+            child: SizedBox(
               width: double.infinity,
               child: CachedNetworkImage(
                 imageUrl: manga.avatar ?? '',

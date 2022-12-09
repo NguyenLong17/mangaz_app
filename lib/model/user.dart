@@ -2,17 +2,18 @@ import 'package:manga_app/model/manga.dart';
 
 class User {
   User({
-      this.name, 
-      this.phoneNumber, 
-      this.email, 
-      this.password, 
-      this.passwordConfirm, 
-      this.dateOfBirth, 
-      this.avatar, 
-      this.mangafavorite, 
-      this.coin, 
-      this.point, 
-      this.id,});
+    this.name,
+    this.phoneNumber,
+    this.email,
+    this.password,
+    this.passwordConfirm,
+    this.dateOfBirth,
+    this.avatar,
+    this.mangafavorite,
+    this.coin,
+    this.point,
+    this.id,
+  });
 
   User.fromJson(dynamic json) {
     name = json['name'];
@@ -32,6 +33,7 @@ class User {
     point = json['point'];
     id = json['id'];
   }
+
   String? name;
   String? phoneNumber;
   String? email;
@@ -61,5 +63,4 @@ class User {
     map['id'] = id;
     return map;
   }
-
 }

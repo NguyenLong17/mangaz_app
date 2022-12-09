@@ -1,7 +1,3 @@
-import 'dart:convert';
-import 'dart:io';
-import 'dart:typed_data';
-
 import 'package:cached_network_image/cached_network_image.dart';
 import 'package:flutter/material.dart';
 import 'package:image_picker/image_picker.dart';
@@ -37,7 +33,6 @@ class _ChangeProfileState extends State<ChangeProfile> {
   void initState() {
     accountBloc = AccountBloc();
     accountBloc.getProfile();
-    // getProfile();
     super.initState();
   }
 
@@ -49,6 +44,7 @@ class _ChangeProfileState extends State<ChangeProfile> {
         title: 'Thông tin cá nhân',
         actions: [
           IconButton(
+            enableFeedback: false,
             onPressed: () {
               apiAccountBloc.updateProfile(
                 name: _nameController.text,
@@ -60,7 +56,7 @@ class _ChangeProfileState extends State<ChangeProfile> {
                   message: 'Thay đổi thông tin thành công',
                   type: ToastType.success);
             },
-            icon: Icon(Icons.save_as),
+            icon: const Icon(Icons.save_as),
           ),
         ],
       ),
@@ -79,7 +75,7 @@ class _ChangeProfileState extends State<ChangeProfile> {
           _emailController.text = user?.email ?? '';
           url = user?.avatar ?? '';
           return SingleChildScrollView(
-            padding: EdgeInsets.all(8),
+            padding: const EdgeInsets.all(8),
             child: Column(
               children: [
                 Stack(
@@ -91,7 +87,7 @@ class _ChangeProfileState extends State<ChangeProfile> {
                         width: 100,
                         color: Colors.grey.shade200,
                         child: CachedNetworkImage(
-                          imageUrl: url ?? '',
+                          imageUrl: url,
                           placeholder: (context, url) =>
                               const CircularProgressIndicator(),
                           errorWidget: (context, url, error) =>

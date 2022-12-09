@@ -1,6 +1,5 @@
 import 'dart:convert';
 
-import 'package:hive/hive.dart';
 import 'package:hive_flutter/hive_flutter.dart';
 
 class HiveManager {
@@ -10,35 +9,34 @@ class HiveManager {
 
   HiveManager._internal();
 
-  var _currentBox = 'config';
+  final _currentBox = 'config';
 
-  Future init() async{
+  Future init() async {
     await Hive.initFlutter();
     await Hive.openBox(_currentBox);
   }
 
-  Future<dynamic> getValue(String key) async{
+  Future<dynamic> getValue(String key) async {
     final box = Hive.box(_currentBox);
     final value = box.get(key);
-    if (value != null){
+    if (value != null) {
       return jsonDecode(value);
     }
     return null;
   }
 
-  Future<void> setValue(String key, dynamic value) async{
+  Future<void> setValue(String key, dynamic value) async {
     final box = Hive.box(_currentBox);
-    if (value == null){
+    if (value == null) {
       box.put(key, null);
-    }else{
+    } else {
       box.put(key, jsonEncode(value));
     }
-
   }
 
-  Future remove(String key) async{
+  Future remove(String key) async {
     final box = Hive.box(_currentBox);
-    await  box.delete(userKey);
+    await box.delete(userKey);
   }
 }
 

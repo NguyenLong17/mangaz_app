@@ -2,10 +2,11 @@ import 'package:manga_app/model/manga.dart';
 
 class Categories {
   Categories({
-      this.name, 
-      this.content, 
-      this.manga, 
-      this.id,});
+    this.name,
+    this.content,
+    this.manga,
+    this.id,
+  });
 
   Categories.fromJson(dynamic json) {
     name = json['name'];
@@ -18,6 +19,7 @@ class Categories {
     }
     id = json['id'];
   }
+
   String? name;
   String? content;
   List<Manga>? manga;
@@ -33,7 +35,6 @@ class Categories {
     map['id'] = id;
     return map;
   }
-
 }
 
 // class MangaCategory {

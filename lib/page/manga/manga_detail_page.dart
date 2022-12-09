@@ -1,19 +1,11 @@
-import 'dart:convert';
-
 import 'package:cached_network_image/cached_network_image.dart';
-import 'package:flutter/gestures.dart';
 import 'package:flutter/material.dart';
 import 'package:manga_app/bloc/manga_detail_bloc.dart';
-import 'package:manga_app/common/hive_manager.dart';
-import 'package:manga_app/common/util/navigator.dart';
 import 'package:manga_app/common/widgets/mybutton.dart';
 import 'package:manga_app/common/widgets/tabbar.dart';
 import 'package:manga_app/common/widgets/toast_overlay.dart';
 import 'package:manga_app/model/manga.dart';
-import 'package:manga_app/page/account/login_page.dart';
 import 'package:manga_app/page/manga/read_chapter_manga_page.dart';
-import 'package:manga_app/page/item/item_chapter.dart';
-import 'package:manga_app/service/api_service.dart';
 
 class MangaDetailPage extends StatefulWidget {
   final Manga manga;
@@ -81,10 +73,10 @@ class _MangaDetailPageState extends State<MangaDetailPage>
         },
         body: Column(
           children: [
-            SizedBox(
+            const SizedBox(
               height: 16,
             ),
-            Container(
+            SizedBox(
               height: 72,
               // height: 40,
               child: TabBar(
@@ -131,21 +123,20 @@ class _MangaDetailPageState extends State<MangaDetailPage>
                       child: GestureDetector(
                         onTap: () {
                           mangaDetailBloc.addMangaFavorite(widget.manga);
-                          print('_MangaDetailPageState.buildMangaDetail: ${apiService.user?.mangafavorite?.length}');
                           ToastOverlay(context).showToastOverlay(
                               message: 'Theo dõi thành công',
                               type: ToastType.success);
                         },
                         child: widget.manga.favorite ?? false
                             ? const Icon(
-                          Icons.favorite_outlined,
-                          size: 58,
-                          color: Colors.pink,
-                        )
+                                Icons.favorite_outlined,
+                                size: 58,
+                                color: Colors.pink,
+                              )
                             : const Icon(
-                          Icons.favorite_border,
-                          size: 58,
-                        ),
+                                Icons.favorite_border,
+                                size: 58,
+                              ),
                       ),
                     ),
                   ],
@@ -222,21 +213,6 @@ class _MangaDetailPageState extends State<MangaDetailPage>
                 const SizedBox(
                   height: 16,
                 ),
-                // Row(
-                //   children: [
-                //     const Text(
-                //       'Theo dõi:',
-                //       style: TextStyle(
-                //         fontWeight: FontWeight.w600,
-                //         fontSize: 20,
-                //       ),
-                //     ),
-                //
-                //   ],
-                // ),
-                // const SizedBox(
-                //   height: 16,
-                // ),
                 MyButton(
                     textButton: 'Đọc truyện',
                     backgroundColor: Colors.red,
@@ -265,8 +241,7 @@ class _MangaDetailPageState extends State<MangaDetailPage>
   Widget buildBodyPage() {
     return TabBarStack(
       index: controller.index,
-      children: pages,
-      duration: Duration(milliseconds: 150),
+      duration: const Duration(milliseconds: 150),
       previous: () {
         final currentIndex = controller.index;
         int newIndex = currentIndex - 1;
@@ -283,6 +258,7 @@ class _MangaDetailPageState extends State<MangaDetailPage>
         }
         controller.animateTo(newIndex);
       },
+      children: pages,
     );
   }
 
@@ -291,34 +267,34 @@ class _MangaDetailPageState extends State<MangaDetailPage>
       Container(
         alignment: Alignment.center,
         height: 56,
-        padding: EdgeInsets.all(8),
-        child: Text(
+        padding: const EdgeInsets.all(8),
+        decoration: BoxDecoration(
+            borderRadius: BorderRadius.circular(25),
+            border: Border.all(color: Colors.grey.shade500),
+            color: Colors.grey.shade200),
+        child: const Text(
           'Nội dung',
           style: TextStyle(
             fontSize: 22,
             fontWeight: FontWeight.w600,
           ),
         ),
-        decoration: BoxDecoration(
-            borderRadius: BorderRadius.circular(25),
-            border: Border.all(color: Colors.grey.shade500),
-            color: Colors.grey.shade200),
       ),
       Container(
         alignment: Alignment.center,
         height: 56,
-        padding: EdgeInsets.all(8),
-        child: Text(
+        padding: const EdgeInsets.all(8),
+        decoration: BoxDecoration(
+            borderRadius: BorderRadius.circular(25),
+            border: Border.all(color: Colors.grey.shade500),
+            color: Colors.grey.shade200),
+        child: const Text(
           'Chapter',
           style: TextStyle(
             fontSize: 22,
             fontWeight: FontWeight.w600,
           ),
         ),
-        decoration: BoxDecoration(
-            borderRadius: BorderRadius.circular(25),
-            border: Border.all(color: Colors.grey.shade500),
-            color: Colors.grey.shade200),
       ),
     ]);
     pages.addAll([

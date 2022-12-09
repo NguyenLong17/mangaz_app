@@ -1,4 +1,3 @@
-import 'package:cached_network_image/cached_network_image.dart';
 import 'package:flutter/material.dart';
 import 'package:manga_app/common/util/navigator.dart';
 import 'package:manga_app/model/manga.dart';
@@ -14,20 +13,18 @@ class ReadChapterMangaPage extends StatefulWidget {
 }
 
 class _ReadChapterMangaPageState extends State<ReadChapterMangaPage> {
-
-  bool _showBackToTopButton = false;
+  bool showBackToTopButton = false;
   late ScrollController _scrollController;
 
   @override
   void initState() {
-
     _scrollController = ScrollController()
       ..addListener(() {
         setState(() {
           if (_scrollController.offset >= 400) {
-            _showBackToTopButton = true;
+            showBackToTopButton = true;
           } else {
-            _showBackToTopButton = false;
+            showBackToTopButton = false;
           }
         });
       });
@@ -41,14 +38,11 @@ class _ReadChapterMangaPageState extends State<ReadChapterMangaPage> {
     super.dispose();
   }
 
-
   @override
   Widget build(BuildContext context) {
-
     return Scaffold(
       body: CustomScrollView(
         slivers: [
-
           SliverPadding(
             padding: const EdgeInsets.all(16),
             sliver: SliverList(
@@ -59,17 +53,17 @@ class _ReadChapterMangaPageState extends State<ReadChapterMangaPage> {
                 return Column(
                   crossAxisAlignment: CrossAxisAlignment.start,
                   children: [
-                    SizedBox(
+                    const SizedBox(
                       height: 8,
                     ),
                     GestureDetector(
                       onTap: () {
-                        navigatorPush(context, ItemChapter(chapter: chapter ?? Chapter()));
+                        navigatorPush(context,
+                            ItemChapter(chapter: chapter ?? Chapter()));
                       },
-
                       child: buildChapterManga(chapter ?? Chapter()),
                     ),
-                    SizedBox(
+                    const SizedBox(
                       height: 8,
                     ),
                   ],
@@ -85,7 +79,7 @@ class _ReadChapterMangaPageState extends State<ReadChapterMangaPage> {
   Widget buildChapterManga(Chapter chapter) {
     return Container(
       alignment: Alignment.centerLeft,
-      padding: EdgeInsets.symmetric(horizontal: 32),
+      padding: const EdgeInsets.symmetric(horizontal: 32),
       height: 56,
       width: double.infinity,
       decoration: BoxDecoration(
@@ -96,7 +90,7 @@ class _ReadChapterMangaPageState extends State<ReadChapterMangaPage> {
       ),
       child: Text(
         chapter.name ?? '',
-        style: TextStyle(
+        style: const TextStyle(
           fontSize: 16,
           fontWeight: FontWeight.w400,
         ),

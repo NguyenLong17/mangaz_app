@@ -140,7 +140,8 @@ class _RegisterPageState extends State<RegisterPage> {
                     keyboardType: TextInputType.text,
                     onChanged: (String password) {
                       registerBloc.checkPassword(password);
-                      registerBloc.checkConfirmPassword(password, _passwordConfirmController.text);
+                      registerBloc.checkConfirmPassword(
+                          password, _passwordConfirmController.text);
                     },
                     inputCheck: registerBloc.errorPassword,
                     obscureText: registerBloc.showPassword,

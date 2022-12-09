@@ -5,7 +5,6 @@ class RegisterBloc {
 
   Stream<bool> get registerStream => _registerStreamController.stream;
 
-
   String errorName = '';
 
   String errorPhone = '';
@@ -112,7 +111,7 @@ class RegisterBloc {
   }
 
   void checkDateOfBirth(String dateOfBirth) {
-    if(dateOfBirth == '') {
+    if (dateOfBirth == '') {
       errorDataOfBirth = 'Choose your date of birth';
       _registerStreamController.add(true);
     } else {
@@ -120,7 +119,7 @@ class RegisterBloc {
     }
   }
 
-  void checkEmail (String email) {
+  void checkEmail(String email) {
     if (email.isEmpty) {
       errorEmail = 'Email can not be left blank';
       _registerStreamController.add(true);
@@ -134,12 +133,8 @@ class RegisterBloc {
   }
 
   bool isEmail(String email) {
-    final regExp = RegExp( r'^(([^<>()[\]\\.,;:\s@\"]+(\.[^<>()[\]\\.,;:\s@\"]+)*)|(\".+\"))@((\[[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\])|(([a-zA-Z\-0-9]+\.)+[a-zA-Z]{2,}))$');
+    final regExp = RegExp(
+        r'^(([^<>()[\]\\.,;:\s@\"]+(\.[^<>()[\]\\.,;:\s@\"]+)*)|(\".+\"))@((\[[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\])|(([a-zA-Z\-0-9]+\.)+[a-zA-Z]{2,}))$');
     return regExp.hasMatch(email);
   }
-
-
-
-
-
 }

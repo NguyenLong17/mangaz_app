@@ -7,7 +7,7 @@ import 'package:manga_app/common/widgets/mytextfield.dart';
 import 'package:manga_app/common/widgets/progress_dialog.dart';
 import 'package:manga_app/common/widgets/toast_overlay.dart';
 import 'package:manga_app/page/account/register_page.dart';
-import 'package:manga_app/page/bottom_navigation_bar_page.dart';
+import 'package:manga_app/page/manga/bottom_navigation_bar_page.dart';
 import 'package:manga_app/service/api_service.dart';
 import 'package:manga_app/service/user_service.dart';
 
@@ -162,7 +162,7 @@ class _LoginPageState extends State<LoginPage> {
                       textColor: Colors.black,
                       backgroundColor: Colors.grey.shade500,
                       onTap: () {
-                        navigatorPush(context, RegisterPage());
+                        navigatorPush(context, const RegisterPage());
                       },
                     ),
                   ),
@@ -201,14 +201,12 @@ class _LoginPageState extends State<LoginPage> {
       password: _passwordController.text,
     )
         .then((user) {
-
       hive.setValue(userKey, user);
 
       ToastOverlay(context).showToastOverlay(
-          message: 'Login Success, Hi: ${user.name}',
-          type: ToastType.success);
+          message: 'Login Success, Hi: ${user.name}', type: ToastType.success);
 
-      navigatorPushAndRemoveUntil(context, BottomNavigationBarPage());
+      navigatorPushAndRemoveUntil(context, const BottomNavigationBarPage());
     }).catchError((e) {
       ToastOverlay(context).showToastOverlay(
           message: 'Login Error: ${e.toString()}', type: ToastType.error);

@@ -1,15 +1,16 @@
 class Manga {
   Manga({
-      this.name, 
-      this.avatar, 
-      this.author, 
-      this.anotherName, 
-      this.favorite, 
-      this.view, 
-      this.content, 
-      this.tag, 
-      this.chapter, 
-      this.id,});
+    this.name,
+    this.avatar,
+    this.author,
+    this.anotherName,
+    this.favorite,
+    this.view,
+    this.content,
+    this.tag,
+    this.chapter,
+    this.id,
+  });
 
   Manga.fromJson(dynamic json) {
     name = json['name'];
@@ -33,6 +34,7 @@ class Manga {
     }
     id = json['id'];
   }
+
   String? name;
   String? avatar;
   String? author;
@@ -62,18 +64,19 @@ class Manga {
     map['id'] = id;
     return map;
   }
-
 }
 
 class Chapter {
   Chapter({
-      this.name, 
-      this.image,});
+    this.name,
+    this.image,
+  });
 
   Chapter.fromJson(dynamic json) {
     name = json['name'];
     image = json['image'] != null ? json['image'].cast<String>() : [];
   }
+
   String? name;
   List<String>? image;
 
@@ -83,20 +86,21 @@ class Chapter {
     map['image'] = image;
     return map;
   }
-
 }
 
 class Tag {
   Tag({
-      this.id, 
-      this.name, 
-      this.description,});
+    this.id,
+    this.name,
+    this.description,
+  });
 
   Tag.fromJson(dynamic json) {
     id = json['id'];
     name = json['name'];
     description = json['description'];
   }
+
   String? id;
   String? name;
   String? description;
@@ -108,5 +112,4 @@ class Tag {
     map['description'] = description;
     return map;
   }
-
 }

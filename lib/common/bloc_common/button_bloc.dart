@@ -4,6 +4,7 @@ import 'package:flutter/material.dart';
 
 class MyButtonBloc {
   final _myButtonStreamController = StreamController<bool>();
+
   Stream<bool> get myButtonStream => _myButtonStreamController.stream;
   bool isSelect = false;
 

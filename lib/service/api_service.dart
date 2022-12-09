@@ -2,9 +2,7 @@ import 'dart:convert';
 import 'package:http/http.dart' as http;
 import 'package:image_picker/image_picker.dart';
 import 'package:manga_app/common/const/const.dart';
-import 'package:manga_app/model/manga.dart';
 import 'package:manga_app/model/user.dart';
-
 
 class APIService {
   static final _service = APIService._internal();
@@ -41,42 +39,25 @@ class APIService {
     } else {
       switch (method) {
         case Method.get:
-          response = await http.get(uri,);
+          response = await http.get(
+            uri,
+          );
           break;
         case Method.put:
-          response =
-          await http.put(uri, body: body, encoding: utf8);
+          response = await http.put(uri, body: body, encoding: utf8);
           break;
         case Method.delete:
-          response = await http.delete(uri,
-             body: body, encoding: utf8);
+          response = await http.delete(uri, body: body, encoding: utf8);
           break;
         default:
-          response = await http.post(uri,
-               body: body, encoding: utf8);
+          response = await http.post(uri, body: body, encoding: utf8);
           break;
       }
     }
-    final data = jsonDecode(response.body);
-    // final data = jsonDecode(responseJson);
 
-   final responseJson = json.decode(utf8.decode(response.bodyBytes));
+    final responseJson = json.decode(utf8.decode(response.bodyBytes));
 
     return responseJson;
-
-    // if (response.statusCode >= 200 && response.statusCode < 300) {
-    //   final json = jsonDecode(response.body);
-    //
-    //   if (json['code'] == 0) {
-    //     // map, dictionary, key:value
-    //     final data = json['data'];
-    //     return data;
-    //   } else {
-    //     throw Exception(json['message']);
-    //   }
-    // }
-
-    // throw Exception('Có lỗi xảy ra, http status code: ${response.statusCode}');
   }
 }
 

@@ -1,7 +1,6 @@
 import 'package:manga_app/model/manga.dart';
 import 'package:manga_app/service/api_service.dart';
 
-
 extension MangaService on APIService {
   Future<List<Manga>> getMangas() async {
     final result = await request(
@@ -22,5 +21,4 @@ extension MangaService on APIService {
     final manga = Manga.fromJson(result);
     return manga;
   }
-
 }

@@ -1,7 +1,6 @@
 import 'dart:async';
 
 class LoginBloc {
-
   final _loginSteamController = StreamController<bool>();
 
   Stream<bool> get loginStream => _loginSteamController.stream;
@@ -64,11 +63,11 @@ class LoginBloc {
     final regExp = RegExp(r'^(?=.*?[A-Z])(?=.*?[a-z])(?=.*?[0-9]).{8,}$');
     return regExp.hasMatch(password);
   }
+
   void showTextFieldPassword() {
     showPassword = !showPassword;
     showPasswordIcon = !showPasswordIcon;
     _loginSteamController.add(showPassword);
     _loginSteamController.add(showPasswordIcon);
   }
-
 }

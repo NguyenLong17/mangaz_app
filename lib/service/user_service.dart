@@ -31,15 +31,12 @@ extension UserService on APIService {
     return profileUser;
   }
 
-  Future<User> updateProfile({
-    required int id,
-    required String name,
-    required String dateOfBirth,
-    required String email,
-    required String avatar
-
-  }) async {
-
+  Future<User> updateProfile(
+      {required int id,
+      required String name,
+      required String dateOfBirth,
+      required String email,
+      required String avatar}) async {
     final body = {
       "name": name,
       "dateOfBirth": dateOfBirth,

@@ -5,61 +5,54 @@ import 'package:manga_app/service/categories_service.dart';
 
 class CategoriesBloc {
 
-  final _categoriesStreamController = StreamController<List<Categories>>();
+  static final _service = CategoriesBloc._internal();
+
+  factory CategoriesBloc() => _service;
+
+  CategoriesBloc._internal();
+
+  final _categoriesStreamController = StreamController<List<Categories>>.broadcast();
 
   Stream<List<Categories>> get categoriesStream => _categoriesStreamController.stream;
 
-  //
-  // final _categoryStreamController = StreamController<List<Mamga>>();
-  //
-  // Stream<List<MangaCategory>> get categoryStream => _categoryStreamController.stream;
+  final _showCategoriesStreamController = StreamController<bool>.broadcast();
+
+  Stream<bool> get showCategoriesStream =>
+      _showCategoriesStreamController.stream;
+
+
+  bool showCategories = true;
 
   final List<Categories> categories = [];
 
-  // Categories? categoriesSelected;
-  // final listFilter = <Manga>[];
-
-  CategoriesBloc() {
-    getCategories();
-  }
-
-  // void dispose(){
-  //   _categoryStreamController.close();
+  //
+  // CategoriesBloc() {
+  //   getCategories();
   // }
 
 
   Future<void> getCategories() async {
-    // final progressDialog = ProgressDialog(context);
-
-    // progressDialog.show();
-
     await Future.delayed(const Duration(seconds: 2));
     await apiService.getCategories().then((value) {
       if (value.isNotEmpty) {
+        categories.clear();
         categories.addAll(value);
         _categoriesStreamController.add(categories);
       }
-      // progressDialog.hide();
     }).catchError((e) {
-      // progressDialog.hide();
       _categoriesStreamController.addError(e.toString());
     });
   }
 
-  // Future getMangaCategory({required int idCategories}) async {
-  //
-  //   apiService.getCategoriesDetail(idCategories: idCategories).then((category) {
-  //     var mangas = category.manga;
-  //     listFilter.clear();
-  //     listFilter.addAll(mangas ?? []);
-  //     _categoryStreamController.add(listFilter);
-  //
-  //     print('Data api: ${listFilter.length}');
-  //   }).catchError((e) {
-  //     print('CategoriesBloc.getMangaCategory: ${e.toString()}');
-  //   });
-  //
-  // }
-
-
+  Future<void> checkShowCategories(String keyword) async {
+    if (keyword.isEmpty) {
+      showCategories = true;
+      _showCategoriesStreamController.add(showCategories);
+    } else {
+      showCategories = false;
+      _showCategoriesStreamController.add(showCategories);
+    }
+  }
 }
+
+final apiCategoriesBloc = CategoriesBloc();

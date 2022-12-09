@@ -1,11 +1,12 @@
 class Photo {
   Photo({
-      this.id, 
-      this.url, 
-      this.media, 
-      this.thumb, 
-      this.width, 
-      this.height,});
+    this.id,
+    this.url,
+    this.media,
+    this.thumb,
+    this.width,
+    this.height,
+  });
 
   Photo.fromJson(dynamic json) {
     id = json['id'];
@@ -15,6 +16,7 @@ class Photo {
     width = json['width'];
     height = json['height'];
   }
+
   String? id;
   String? url;
   String? media;
@@ -32,5 +34,4 @@ class Photo {
     map['height'] = height;
     return map;
   }
-
 }

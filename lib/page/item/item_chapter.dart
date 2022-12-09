@@ -27,7 +27,6 @@ class _ItemChapterState extends State<ItemChapter> {
           }
         });
       });
-    print('_ItemChapterState.initState');
     super.initState();
   }
 
@@ -78,7 +77,7 @@ class _ItemChapterState extends State<ItemChapter> {
             ];
           },
           body: ListView.builder(
-            padding: EdgeInsets.all(4),
+            padding: const EdgeInsets.all(4),
             controller: _scrollController,
             itemBuilder: (context, index) {
               final image = widget.chapter.image?[index] ?? '';

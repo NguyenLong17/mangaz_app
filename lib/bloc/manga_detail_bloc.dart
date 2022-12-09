@@ -1,16 +1,12 @@
 import 'dart:async';
-import 'dart:convert';
-
 import 'package:manga_app/common/hive_manager.dart';
 import 'package:manga_app/model/manga.dart';
 import 'package:manga_app/service/api_service.dart';
 
 class MangaDetailBloc {
-
   static final _service = MangaDetailBloc._internal();
 
   factory MangaDetailBloc() => _service;
-
 
   MangaDetailBloc._internal();
 
@@ -18,9 +14,11 @@ class MangaDetailBloc {
 
   Stream<bool> get mangaDetailStream => _mangaDetailStreamController.stream;
 
-  final _mangaDetailFavoriteStreamController = StreamController<List<Manga>>.broadcast();
+  final _mangaDetailFavoriteStreamController =
+      StreamController<List<Manga>>.broadcast();
 
-  Stream<List<Manga>> get mangaDetailFavoriteStream => _mangaDetailFavoriteStreamController.stream;
+  Stream<List<Manga>> get mangaDetailFavoriteStream =>
+      _mangaDetailFavoriteStreamController.stream;
 
   bool isFavorite = false;
   bool showContent = false;
@@ -41,11 +39,10 @@ class MangaDetailBloc {
   }
 
   void addMangaFavorite(Manga manga) {
-
-    manga.favorite  = !manga.favorite!;
+    manga.favorite = !manga.favorite!;
     _mangaDetailStreamController.add(manga.favorite!);
 
-    if(manga.favorite == false) {
+    if (manga.favorite == false) {
       apiService.user?.mangafavorite?.remove(manga);
     } else {
       apiService.user?.mangafavorite?.add(manga);
@@ -53,10 +50,9 @@ class MangaDetailBloc {
 
     hive.setValue(userKey, apiService.user);
 
-    _mangaDetailFavoriteStreamController.add(apiService.user?.mangafavorite ?? [] );
+    _mangaDetailFavoriteStreamController
+        .add(apiService.user?.mangafavorite ?? []);
   }
-
 }
 
 final apiMangaDetailBloc = MangaDetailBloc();
-

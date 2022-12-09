@@ -6,11 +6,13 @@ class ToastOverlay {
 
   Color? color;
 
-  ToastOverlay(this.context,);
+  ToastOverlay(
+    this.context,
+  );
 
   void showToastOverlay({
     required String message,
-    required ToastType type ,
+    required ToastType type,
     Duration duration = const Duration(seconds: 5),
   }) {
     if (overlayEntry != null) {
@@ -18,13 +20,10 @@ class ToastOverlay {
       overlayEntry = null;
     }
 
-
-
-
-    switch(type){
+    switch (type) {
       case ToastType.success:
-      color = Colors.green;
-      break;
+        color = Colors.green;
+        break;
       case ToastType.warning:
         color = Colors.yellowAccent;
         break;

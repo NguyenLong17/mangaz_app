@@ -1,10 +1,8 @@
 import 'package:flutter/material.dart';
 import 'package:manga_app/common/hive_manager.dart';
-import 'package:manga_app/page/categories/categories_page.dart';
 import 'package:manga_app/page/manga/home_page.dart';
 import 'package:manga_app/page/account/profile_page.dart';
 import 'package:manga_app/page/search_page.dart';
-import 'package:manga_app/service/api_service.dart';
 
 class BottomNavigationBarPage extends StatefulWidget {
   const BottomNavigationBarPage({Key? key}) : super(key: key);
@@ -19,6 +17,8 @@ class _BottomNavigationBarPageState extends State<BottomNavigationBarPage>
   int currentIndex = 0;
   final pages = <Widget>[];
   late TabController controller;
+
+  SearchPage searchPage = SearchPage();
 
   @override
   void initState() {
@@ -53,15 +53,12 @@ class _BottomNavigationBarPageState extends State<BottomNavigationBarPage>
         setState(() {
           currentIndex = index;
           controller.animateTo(index);
-          print('Index Page = $index');
         });
       },
       selectedLabelStyle: const TextStyle(color: Colors.black),
       selectedItemColor: Colors.red,
       unselectedItemColor: Colors.grey,
       type: BottomNavigationBarType.fixed,
-      // showSelectedLabels: false,
-      // showUnselectedLabels: false,
       elevation: 0,
     );
   }
@@ -70,36 +67,24 @@ class _BottomNavigationBarPageState extends State<BottomNavigationBarPage>
     return [
       const BottomNavigationBarItem(
         icon: Icon(Icons.home),
-        label: 'Home',
-      ),
-      const BottomNavigationBarItem(
-        icon: Icon(Icons.category),
-        label: 'Category',
+        label: 'Trang chủ',
       ),
       const BottomNavigationBarItem(
         icon: Icon(Icons.search),
-        label: 'Search',
-      ),
-      const BottomNavigationBarItem(
-        icon: Icon(
-          Icons.propane,
-        ),
-        label: 'Story',
+        label: 'Tìm kiếm',
       ),
       const BottomNavigationBarItem(
         icon: Icon(Icons.co_present_sharp),
-        label: 'Account',
+        label: 'Tài khoản',
       ),
     ];
   }
 
   void createListPage() {
     pages.addAll([
-      HomePage(),
-      CategoriesPage(),
-      SearchPage(),
-      Container(color: Colors.purple),
-      ProfilePage(),
+      const HomePage(),
+      searchPage,
+      const ProfilePage(),
     ]);
 
     controller = TabController(
@@ -110,6 +95,9 @@ class _BottomNavigationBarPageState extends State<BottomNavigationBarPage>
   void onChanged() {
     setState(() {
       currentIndex = controller.index;
+      if (currentIndex == 1){
+        searchPage.reload();
+      }
     });
   }
 }
