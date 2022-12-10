@@ -24,8 +24,6 @@ class _ProfilePageState extends State<ProfilePage> {
   List<Manga>? listMangaFavorite = apiService.user?.mangafavorite;
   int? countManga;
 
-
-
   String? name;
   String? avatar;
 
@@ -164,39 +162,45 @@ class _ProfilePageState extends State<ProfilePage> {
   }
 
   Widget buildListFavoriteManga() {
-    return Container(
-      // alignment: Alignment.topLeft,
-      height: 256,
-      width: double.infinity,
-      padding: const EdgeInsets.symmetric(horizontal: 16, vertical: 20),
-      decoration: BoxDecoration(
-        color: Colors.white70,
-        borderRadius: BorderRadius.circular(15),
-      ),
-      child: Column(
-        // mainAxisAlignment: MainAxisAlignment.start,
-        crossAxisAlignment: CrossAxisAlignment.start,
-        children: [
-          const Text(
-            'Danh sách truyện yêu thích',
-            style: TextStyle(fontWeight: FontWeight.w600),
-          ),
-          const SizedBox(
-            height: 16,
-          ),
-          StreamBuilder<List<Manga>>(
-            stream: apiMangaDetailBloc.mangaDetailFavoriteStream,
-            builder: (context, snapshot) {
-              List<Manga>? mangaFs = apiService.user?.mangafavorite;
-                return Expanded(
+      return Container(
+        // alignment: Alignment.topLeft,
+        height: 256,
+        width: double.infinity,
+        padding: const EdgeInsets.symmetric(horizontal: 16, vertical: 20),
+        decoration: BoxDecoration(
+          color: Colors.white70,
+          borderRadius: BorderRadius.circular(15),
+        ),
+        child: Column(
+          // mainAxisAlignment: MainAxisAlignment.start,
+          crossAxisAlignment: CrossAxisAlignment.start,
+          children: [
+            const Text(
+              'Danh sách truyện yêu thích',
+              style: TextStyle(fontWeight: FontWeight.w600),
+            ),
+            const SizedBox(
+              height: 16,
+            ),
+            StreamBuilder<List<Manga>>(
+              stream: apiMangaDetailBloc.mangaDetailFavoriteStream,
+              builder: (context, snapshot) {
+                List<Manga>? mangaFs = apiService.user?.mangafavorite;
+
+                return Flexible(
                   child: ListView.separated(
                     scrollDirection: Axis.horizontal,
                     itemBuilder: (context, index) {
                       final manga = mangaFs?[index];
-                      return GestureDetector(onTap: () {
-                        navigatorPush(context, MangaDetailPage(manga: manga ?? Manga()));
-                      }
-                          ,child: buildFavoriteManga(manga ?? Manga()));
+                      return GestureDetector(
+                        onTap: () {
+                          navigatorPush(context,
+                              MangaDetailPage(manga: manga ?? Manga()));
+                        },
+                        child: buildFavoriteManga(
+                          manga ?? Manga(),
+                        ),
+                      );
                     },
                     separatorBuilder: (BuildContext context, int index) {
                       return const SizedBox(
@@ -206,11 +210,12 @@ class _ProfilePageState extends State<ProfilePage> {
                     itemCount: mangaFs?.length ?? 0,
                   ),
                 );
-            },
-          ),
-        ],
-      ),
-    );
+              },
+            ),
+          ],
+        ),
+      );
+
   }
 
   Widget buildFavoriteManga(Manga manga) {

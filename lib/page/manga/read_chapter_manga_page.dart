@@ -5,8 +5,9 @@ import 'package:manga_app/page/item/item_chapter.dart';
 
 class ReadChapterMangaPage extends StatefulWidget {
   final Manga manga;
+   Chapter? chapterSelect;
 
-  const ReadChapterMangaPage({super.key, required this.manga});
+   ReadChapterMangaPage({super.key, required this.manga, this.chapterSelect});
 
   @override
   State<ReadChapterMangaPage> createState() => _ReadChapterMangaPageState();
@@ -33,7 +34,6 @@ class _ReadChapterMangaPageState extends State<ReadChapterMangaPage> {
 
   @override
   void dispose() {
-    // TODO: implement dispose
     _scrollController.dispose();
     super.dispose();
   }
@@ -58,8 +58,14 @@ class _ReadChapterMangaPageState extends State<ReadChapterMangaPage> {
                     ),
                     GestureDetector(
                       onTap: () {
-                        navigatorPush(context,
-                            ItemChapter(chapter: chapter ?? Chapter()));
+                        navigatorPush(
+                          context,
+                          ItemChapter(
+                            chapter: chapter ?? Chapter(),
+                            manga: widget.manga,
+                            indexChapter: index,
+                          ),
+                        );
                       },
                       child: buildChapterManga(chapter ?? Chapter()),
                     ),
@@ -88,12 +94,20 @@ class _ReadChapterMangaPageState extends State<ReadChapterMangaPage> {
         ),
         borderRadius: BorderRadius.circular(25),
       ),
-      child: Text(
-        chapter.name ?? '',
-        style: const TextStyle(
-          fontSize: 16,
-          fontWeight: FontWeight.w400,
-        ),
+      child: Row(
+        children: [
+          Text(
+            chapter.name ?? '',
+            style: const TextStyle(
+              fontSize: 16,
+              fontWeight: FontWeight.w400,
+            ),
+          ),
+
+          if(widget.chapterSelect == chapter)...{
+             Expanded(child: Icon(Icons.remove_red_eye),)
+          }
+        ],
       ),
     );
   }

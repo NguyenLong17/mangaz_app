@@ -1,10 +1,13 @@
 import 'package:cached_network_image/cached_network_image.dart';
 import 'package:flutter/material.dart';
 import 'package:manga_app/bloc/manga_detail_bloc.dart';
+import 'package:manga_app/common/util/navigator.dart';
 import 'package:manga_app/common/widgets/mybutton.dart';
 import 'package:manga_app/common/widgets/tabbar.dart';
 import 'package:manga_app/common/widgets/toast_overlay.dart';
 import 'package:manga_app/model/manga.dart';
+import 'package:manga_app/page/item/item_chapter.dart';
+import 'package:manga_app/page/manga/bottom_navigation_bar_page.dart';
 import 'package:manga_app/page/manga/read_chapter_manga_page.dart';
 
 class MangaDetailPage extends StatefulWidget {
@@ -44,18 +47,38 @@ class _MangaDetailPageState extends State<MangaDetailPage>
               backgroundColor: Colors.brown.shade500,
               floating: false,
               pinned: true,
+              centerTitle: true,
               // primary: false,
               expandedHeight: 200,
+              actions: [
+                GestureDetector(
+                  onTap: () {
+                    navigatorPushAndRemoveUntil(
+                        context, const BottomNavigationBarPage());
+                  },
+                  child: const Icon(
+                    Icons.home_filled,
+                    size: 56,
+                    color: Colors.white,
+                  ),
+                )
+              ],
               flexibleSpace: FlexibleSpaceBar(
-                  title: Align(
-                    alignment: Alignment.bottomLeft,
-                    child: Text(
-                      widget.manga.name ?? '',
-                      style: const TextStyle(
-                          fontWeight: FontWeight.w800,
-                          fontSize: 20,
-                          color: Colors.white),
-                    ),
+                  title: Row(
+                    children: [
+                      const SizedBox(
+                        width: 8,
+                      ),
+                      Expanded(
+                        child: Text(
+                          widget.manga.name ?? '',
+                          style: const TextStyle(
+                              fontWeight: FontWeight.w800,
+                              fontSize: 20,
+                              color: Colors.white),
+                        ),
+                      ),
+                    ],
                   ),
                   centerTitle: true,
                   titlePadding:
@@ -214,9 +237,19 @@ class _MangaDetailPageState extends State<MangaDetailPage>
                   height: 16,
                 ),
                 MyButton(
-                    textButton: 'Đọc truyện',
-                    backgroundColor: Colors.red,
-                    onTap: () {}),
+                  textButton: 'Đọc truyện',
+                  backgroundColor: Colors.red,
+                  onTap: () {
+                    navigatorPush(
+                      context,
+                      ItemChapter(
+                        indexChapter: 0,
+                        chapter: widget.manga.chapter?[0] ?? Chapter(),
+                        manga: widget.manga,
+                      ),
+                    );
+                  },
+                ),
               ],
             ),
           );
