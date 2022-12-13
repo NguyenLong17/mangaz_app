@@ -119,7 +119,7 @@ class _LoginPageState extends State<LoginPage> {
                 // autoFocus: true,
                 controller: _phoneNumberController,
                 maxLines: 12,
-                labelText: 'Phone number',
+                labelText: 'Số điện thoại',
                 hintText: '0981 5xx xxx',
                 textAlign: TextAlign.start,
                 keyboardType: TextInputType.phone,
@@ -132,7 +132,7 @@ class _LoginPageState extends State<LoginPage> {
                 height: 16,
               ),
               MyTextField(
-                labelText: 'Password',
+                labelText: 'Mật khẩu',
                 controller: _passwordController,
                 hintText: '********',
                 textAlign: TextAlign.start,
@@ -158,7 +158,7 @@ class _LoginPageState extends State<LoginPage> {
                 children: [
                   Expanded(
                     child: MyButton(
-                      textButton: 'Register',
+                      textButton: 'Đăng ký',
                       textColor: Colors.black,
                       backgroundColor: Colors.grey.shade500,
                       onTap: () {
@@ -171,7 +171,7 @@ class _LoginPageState extends State<LoginPage> {
                   ),
                   Expanded(
                     child: MyButton(
-                      textButton: 'Login',
+                      textButton: 'Đăng nhập',
                       textColor: Colors.black,
                       backgroundColor: Colors.green,
                       onTap: () {
@@ -195,21 +195,30 @@ class _LoginPageState extends State<LoginPage> {
     required String phoneNumber,
     required String password,
   }) {
-    apiService
-        .login(
-      phoneNumber: _phoneNumberController.text,
-      password: _passwordController.text,
-    )
-        .then((user) {
-      hive.setValue(userKey, user);
+    if(loginBloc.errorPhone == '' && loginBloc.errorPassword == '') {
+      {
+        apiService
+            .login(
+          phoneNumber: _phoneNumberController.text,
+          password: _passwordController.text,
+        )
+            .then((user) {
+          hive.setValue(userKey, user);
 
-      ToastOverlay(context).showToastOverlay(
-          message: 'Login Success, Hi: ${user.name}', type: ToastType.success);
+          ToastOverlay(context).showToastOverlay(
+              message: 'Đăng nhập thành công, Xin chào: ${user.name}', type: ToastType.success);
 
-      navigatorPushAndRemoveUntil(context, const BottomNavigationBarPage());
-    }).catchError((e) {
+          navigatorPushAndRemoveUntil(context, const BottomNavigationBarPage());
+        }).catchError(
+              (e) {
+            ToastOverlay(context).showToastOverlay(
+                message: 'Login Error: ${e.toString()}', type: ToastType.error);
+          },
+        );
+      }
+    } else {
       ToastOverlay(context).showToastOverlay(
-          message: 'Login Error: ${e.toString()}', type: ToastType.error);
-    });
+          message: 'Đăng nhập thất bại', type: ToastType.error);
+    }
   }
 }

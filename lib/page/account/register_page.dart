@@ -1,8 +1,14 @@
 import 'package:flutter/material.dart';
 import 'package:manga_app/bloc/register_bloc.dart';
+import 'package:manga_app/common/hive_manager.dart';
+import 'package:manga_app/common/util/navigator.dart';
 import 'package:manga_app/common/widgets/appbar.dart';
 import 'package:manga_app/common/widgets/mybutton.dart';
 import 'package:manga_app/common/widgets/mytextfield.dart';
+import 'package:manga_app/common/widgets/toast_overlay.dart';
+import 'package:manga_app/page/manga/bottom_navigation_bar_page.dart';
+import 'package:manga_app/service/api_service.dart';
+import 'package:manga_app/service/user_service.dart';
 
 class RegisterPage extends StatefulWidget {
   const RegisterPage({Key? key}) : super(key: key);
@@ -237,7 +243,13 @@ class _RegisterPageState extends State<RegisterPage> {
                       textColor: Colors.black,
                       backgroundColor: Colors.green,
                       onTap: () {
-                        // registerBloc.checkDateOfBirth(_dateOfBirthController.text ?? '');
+                        register(
+                          phoneNumber: _phoneNumberController.text,
+                          password: _passwordController.text,
+                          passwordConfirm: _passwordConfirmController.text,
+                          email: _emailController.text,
+                          name: _dateOfBirthController.text,
+                        );
                       }),
                   const SizedBox(
                     height: 28,
@@ -247,5 +259,48 @@ class _RegisterPageState extends State<RegisterPage> {
             }),
       ),
     );
+  }
+
+  void register({
+    required String phoneNumber,
+    required String password,
+    required String passwordConfirm,
+    required String email,
+    required String name,
+  }) {
+    if (registerBloc.errorPhone == '' &&
+        registerBloc.errorPassword == '' &&
+        registerBloc.errorConfirmPassword == '' &&
+        registerBloc.errorEmail == '' &&
+        registerBloc.errorDataOfBirth == '') {
+      {
+        apiService
+            .register(
+                phoneNumber: _phoneNumberController.text,
+                password: _passwordController.text,
+                passwordConfirm: _passwordConfirmController.text,
+                name: _nameController.text,
+                email: _emailController.text,
+                dateOfBirth: _dateOfBirthController.text,)
+            .then((user) {
+          hive.setValue(userKey, user);
+
+          ToastOverlay(context).showToastOverlay(
+              message: 'Đăng ký thành công, Xin chào: ${user.name}',
+              type: ToastType.success);
+
+          navigatorPushAndRemoveUntil(context, const BottomNavigationBarPage());
+        }).catchError(
+          (e) {
+            ToastOverlay(context).showToastOverlay(
+                message: 'Register Error: ${e.toString()}',
+                type: ToastType.error);
+          },
+        );
+      }
+    } else {
+      ToastOverlay(context).showToastOverlay(
+          message: 'Đăng ký thất bại', type: ToastType.error);
+    }
   }
 }

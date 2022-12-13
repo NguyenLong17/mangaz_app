@@ -21,6 +21,33 @@ extension UserService on APIService {
     return user;
   }
 
+  Future<User> register({
+    required String phoneNumber,
+    required String password,
+    String? passwordConfirm,
+    String? name,
+    String? email,
+    String? dateOfBirth,
+  }) async {
+    final body = {
+      "phoneNumber": phoneNumber,
+      "password": password,
+      "passwordConfirm": passwordConfirm,
+      "name": name,
+      "email": email,
+      "dateOfBirth": dateOfBirth,
+    };
+
+    final result = await request(
+      path: '/user',
+      body: body,
+      method: Method.post,
+    );
+
+    final user = User.fromJson(result);
+    return user;
+  }
+
   Future<User> getProfile({required int id}) async {
     final result = await request(
       path: '/user/$id',

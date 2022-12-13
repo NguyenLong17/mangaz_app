@@ -23,14 +23,14 @@ class RegisterBloc {
 
   void checkName(String name) {
     if (name.length < 3) {
-      errorName = 'Requires at least 3 characters';
+      errorName = 'Tối thiểu 3 ký tự';
       _registerStreamController.add(true);
     } else {
       if (name.contains(RegExp(r'^[a-zA-Z0-9]+$'))) {
         errorName = '';
         _registerStreamController.add(false);
       } else {
-        errorName = 'Name cannot contain special characters';
+        errorName = 'tên không được chứa ký tự đặc biệt';
         _registerStreamController.add(true);
       }
     }
@@ -38,10 +38,10 @@ class RegisterBloc {
 
   void checkPhoneNumber(String phoneNumber) {
     if (phoneNumber.isEmpty) {
-      errorPhone = 'Phone number can not be left blank';
+      errorPhone = 'Số điện thoại không ffuowcj bỏ trống';
       _registerStreamController.add(true);
     } else if (!isPhone(phoneNumber)) {
-      errorPhone = 'invalid phone number';
+      errorPhone = 'Số điện thoại không hợp lệ';
       _registerStreamController.add(true);
     } else {
       errorPhone = '';
@@ -66,16 +66,16 @@ class RegisterBloc {
   String isPasswordError(String password) {
     errorPassword = '';
     if (password.length < 8) {
-      errorPassword = 'Less than 8 characters';
+      errorPassword = 'Tối thiểu 6 ký tự';
     } else {
       if (!password.contains(RegExp(r"[a-z]"))) {
-        errorPassword = 'Requires at least 1 lowercase letter';
+        errorPassword = 'Tối thiểu 1 chữ cái viết thường';
       }
       if (!password.contains(RegExp(r"[A-Z]"))) {
-        errorPassword = 'Requires at least 1 uppercase letter';
+        errorPassword = 'Tối thiểu 1 chữ cái viết hoa';
       }
       if (!password.contains(RegExp(r"[0-9]"))) {
-        errorPassword = 'Need at least 1 number';
+        errorPassword = 'Tối thiểu 1 chữ số';
       }
     }
     return errorPassword;
@@ -95,7 +95,7 @@ class RegisterBloc {
 
   void checkConfirmPassword(String password, String confirmPassword) {
     if (password != confirmPassword) {
-      errorConfirmPassword = 'Passwords are not the same';
+      errorConfirmPassword = 'Mật khẩu không hợp lệ';
       _registerStreamController.add(true);
     } else {
       errorConfirmPassword = '';
@@ -112,7 +112,7 @@ class RegisterBloc {
 
   void checkDateOfBirth(String dateOfBirth) {
     if (dateOfBirth == '') {
-      errorDataOfBirth = 'Choose your date of birth';
+      errorDataOfBirth = 'Chọn ngày sinh';
       _registerStreamController.add(true);
     } else {
       _registerStreamController.add(false);
@@ -121,10 +121,10 @@ class RegisterBloc {
 
   void checkEmail(String email) {
     if (email.isEmpty) {
-      errorEmail = 'Email can not be left blank';
+      errorEmail = 'Email không được bỏ trống';
       _registerStreamController.add(true);
     } else if (!isEmail(email)) {
-      errorEmail = 'invalid email';
+      errorEmail = 'Email không hợp lệ';
       _registerStreamController.add(true);
     } else {
       errorEmail = '';

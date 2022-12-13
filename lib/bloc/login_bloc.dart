@@ -24,16 +24,16 @@ class LoginBloc {
   String isPasswordError(String password) {
     errorPassword = '';
     if (password.length < 8) {
-      errorPassword = 'Less than 8 characters';
+      errorPassword = 'Tối thiểu 8 ký tự';
     } else {
       if (!password.contains(RegExp(r"[a-z]"))) {
-        errorPassword = 'Requires at least 1 lowercase letter';
+        errorPassword = 'Tối thiểu 1 chữ cái viết thường';
       }
       if (!password.contains(RegExp(r"[A-Z]"))) {
-        errorPassword = 'Requires at least 1 uppercase letter';
+        errorPassword = 'Tối thiểu 1 chữ cái viết hoa';
       }
       if (!password.contains(RegExp(r"[0-9]"))) {
-        errorPassword = 'Need at least 1 number';
+        errorPassword = 'Tối thiểu 1 chữ số';
       }
     }
     return errorPassword;
@@ -43,9 +43,9 @@ class LoginBloc {
     errorPhone = '';
 
     if (phoneNumber.isEmpty) {
-      errorPhone = 'Phone number can not be left blank';
+      errorPhone = 'Số điện thoại không được bỏ trống';
     } else if (!isPhone(phoneNumber)) {
-      errorPhone = 'invalid phone number';
+      errorPhone = 'Số điện thoại không hợp lệr';
     }
     if (errorPhone.isEmpty) {
       _loginSteamController.add(true);

@@ -41,7 +41,6 @@ class _ItemChapterState extends State<ItemChapter> {
 
   @override
   void dispose() {
-    // TODO: implement dispose
     _scrollController.dispose();
     super.dispose();
   }
@@ -74,6 +73,7 @@ class _ItemChapterState extends State<ItemChapter> {
                     const EdgeInsets.symmetric(horizontal: 16, vertical: 8),
                 title: Row(
                   mainAxisAlignment: MainAxisAlignment.center,
+                  crossAxisAlignment: CrossAxisAlignment.center,
                   children: [
                     GestureDetector(
                       onTap: () {
@@ -109,8 +109,6 @@ class _ItemChapterState extends State<ItemChapter> {
                           color: Colors.white,
                         ),
                       )
-                    ] else ...[
-                      Container()
                     ],
                     const SizedBox(
                       width: 8,
@@ -129,8 +127,6 @@ class _ItemChapterState extends State<ItemChapter> {
                         widget.manga.chapter!.length - 1) ...[
                       GestureDetector(
                         onTap: () {
-                          print(
-                              '_ItemChapterState.build: ${widget.indexChapter}');
                           navigatorPushAndRemoveUntil(
                             context,
                             ItemChapter(
@@ -148,8 +144,6 @@ class _ItemChapterState extends State<ItemChapter> {
                           color: Colors.white,
                         ),
                       )
-                    ] else ...[
-                      Container()
                     ],
                     const SizedBox(
                       width: 16,
