@@ -1,4 +1,5 @@
 Ứng dụng MangaZ: Đọc truyện tranh 
+
 Sử dụng API 
 
  + Màn đăng nhập và đăng ký. Tự động lưu đăng nhập 
