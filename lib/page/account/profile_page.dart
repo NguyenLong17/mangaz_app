@@ -30,6 +30,7 @@ class _ProfilePageState extends State<ProfilePage> {
   @override
   void initState() {
     apiAccountBloc.getProfile();
+
     super.initState();
   }
 

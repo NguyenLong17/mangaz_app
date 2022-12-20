@@ -20,7 +20,7 @@ class AccountBloc {
 
   Future<void> getProfile() async {
 
-    // await Future.delayed(const Duration(seconds: 1));
+    // await Future.delayed(const Duration(seconds: 3));
     await apiService
         .getProfile(
       id: int.parse(apiService.user?.id ?? '0'),

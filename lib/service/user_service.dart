@@ -49,11 +49,13 @@ extension UserService on APIService {
   }
 
   Future<User> getProfile({required int id}) async {
+   // await Future.delayed(const Duration(seconds: 1));
     final result = await request(
       path: '/user/$id',
       method: Method.get,
     );
     final profileUser = User.fromJson(result);
+   print('getProfile: Name : ${profileUser.name}');
 
     return profileUser;
   }

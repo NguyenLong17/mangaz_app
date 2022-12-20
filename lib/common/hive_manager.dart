@@ -11,6 +11,7 @@ class HiveManager {
 
   final _currentBox = 'config';
 
+
   Future init() async {
     await Hive.initFlutter();
     await Hive.openBox(_currentBox);

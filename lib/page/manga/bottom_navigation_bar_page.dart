@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:manga_app/bloc/account_bloc.dart';
 import 'package:manga_app/common/hive_manager.dart';
 import 'package:manga_app/page/manga/home_page.dart';
 import 'package:manga_app/page/account/profile_page.dart';
@@ -23,6 +24,7 @@ class _BottomNavigationBarPageState extends State<BottomNavigationBarPage>
   @override
   void initState() {
     createListPage();
+    apiAccountBloc.getProfile();
     hive.getValue(userKey);
     super.initState();
   }

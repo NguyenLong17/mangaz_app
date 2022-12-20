@@ -1,5 +1,4 @@
 import 'package:flutter/material.dart';
-import 'package:manga_app/page/page_demo/chat_page.dart';
 import 'package:manga_app/page/splash_page.dart';
 
 void main() {
@@ -17,7 +16,7 @@ class MyApp extends StatelessWidget {
         primarySwatch: Colors.blue,
         splashColor: Colors.transparent,
         highlightColor: Colors.transparent,
-        hoverColor: Colors.transparent, // hiển thị in đậm đằng sau
+        hoverColor: Colors.transparent,
       ),
       debugShowCheckedModeBanner: false,
       home: const SplashPage(),
