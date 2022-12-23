@@ -35,11 +35,12 @@ class ItemManga extends StatelessWidget {
             child: Text(
               manga.name ?? '',
               style: const TextStyle(
-                fontSize: 15,
+                fontSize: 11,
                 fontWeight: FontWeight.w400,
               ),
             ),
           ),
+
         ],
       ),
     );

@@ -55,7 +55,6 @@ extension UserService on APIService {
       method: Method.get,
     );
     final profileUser = User.fromJson(result);
-   print('getProfile: Name : ${profileUser.name}');
 
     return profileUser;
   }
