@@ -58,9 +58,12 @@ class _MangaDetailPageState extends State<MangaDetailPage>
                   },
                   child: const Icon(
                     Icons.home_filled,
-                    size: 56,
+                    size: 32,
                     color: Colors.white,
                   ),
+                ),
+                const SizedBox(
+                  width: 4,
                 )
               ],
               flexibleSpace: FlexibleSpaceBar(
@@ -86,7 +89,7 @@ class _MangaDetailPageState extends State<MangaDetailPage>
                   background: CachedNetworkImage(
                     imageUrl: widget.manga.avatar ?? '',
                     placeholder: (context, url) =>
-                        const CircularProgressIndicator(),
+                        const Center(child: CircularProgressIndicator()),
                     errorWidget: (context, url, error) =>
                         const Icon(Icons.error),
                     fit: BoxFit.cover,

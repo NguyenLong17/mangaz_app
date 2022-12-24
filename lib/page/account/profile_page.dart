@@ -84,7 +84,7 @@ class _ProfilePageState extends State<ProfilePage> {
                         child: CachedNetworkImage(
                           imageUrl: user?.avatar ?? '',
                           placeholder: (context, url) =>
-                              const CircularProgressIndicator(),
+                              const Center(child: CircularProgressIndicator()),
                           errorWidget: (context, url, error) =>
                               const Icon(Icons.error),
                           fit: BoxFit.cover,
@@ -187,7 +187,6 @@ class _ProfilePageState extends State<ProfilePage> {
               stream: apiMangaDetailBloc.mangaDetailFavoriteStream,
               builder: (context, snapshot) {
                 List<Manga>? mangaFs = apiService.user?.mangafavorite;
-
                 return Flexible(
                   child: ListView.separated(
                     scrollDirection: Axis.horizontal,
@@ -247,7 +246,7 @@ class _ProfilePageState extends State<ProfilePage> {
             child: Text(
               manga.name ?? '',
               style: const TextStyle(
-                fontSize: 15,
+                fontSize: 12,
                 fontWeight: FontWeight.w400,
               ),
             ),

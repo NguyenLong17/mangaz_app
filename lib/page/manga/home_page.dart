@@ -177,8 +177,6 @@ class _HomePageState extends State<HomePage> {
                   if (snapshot.hasData) {
                     final mangas = snapshot.data ?? [];
                     return GridView.builder(
-                      scrollDirection: Axis.vertical,
-
                       shrinkWrap: true,
                       gridDelegate:
                           const SliverGridDelegateWithFixedCrossAxisCount(

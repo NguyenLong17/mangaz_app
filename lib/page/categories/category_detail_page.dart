@@ -83,7 +83,7 @@ class _CategoryDetailPageState extends State<CategoryDetailPage> {
                             child: CachedNetworkImage(
                               imageUrl: manga?.avatar ?? '',
                               placeholder: (context, url) =>
-                                  const CircularProgressIndicator(),
+                                  const Center(child:  CircularProgressIndicator()),
                               errorWidget: (context, url, error) =>
                                   const Icon(Icons.error),
                               fit: BoxFit.cover,
@@ -136,7 +136,7 @@ class _CategoryDetailPageState extends State<CategoryDetailPage> {
             const SizedBox(
               height: 56,
             ),
-            const Text('Danh sách truyện đang được cập nhật!'),
+            const Center(child: Text('Danh sách truyện đang được cập nhật!')),
           ],
         ),
       );

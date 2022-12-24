@@ -21,7 +21,7 @@ class ItemManga extends StatelessWidget {
               child: CachedNetworkImage(
                 imageUrl: manga.avatar ?? '',
                 placeholder: (context, url) =>
-                    const CircularProgressIndicator(),
+                    Center(child: const CircularProgressIndicator()),
                 errorWidget: (context, url, error) => const Icon(Icons.error),
                 fit: BoxFit.cover,
               ),

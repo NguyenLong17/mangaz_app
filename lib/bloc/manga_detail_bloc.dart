@@ -40,7 +40,7 @@ class MangaDetailBloc {
 
   void addMangaFavorite(Manga manga) {
     manga.favorite = !manga.favorite!;
-    _mangaDetailStreamController.add(manga.favorite!);
+    _mangaDetailStreamController.add(manga.favorite ?? true);
 
     if (manga.favorite == false) {
       apiService.user?.mangafavorite?.remove(manga);

@@ -64,6 +64,7 @@ class _SearchPageState extends State<SearchPage> {
 
   Widget buildBody() {
     return SingleChildScrollView(
+
       padding: const EdgeInsets.all(16),
       child: Column(
         children: [
