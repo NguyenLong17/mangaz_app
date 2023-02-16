@@ -2,6 +2,8 @@ import 'dart:async';
 import 'package:manga_app/model/manga.dart';
 import 'package:manga_app/model/user.dart';
 
+import '../common/hive_manager.dart';
+
 
 class HistoryReadingBloc {
   static final _service = HistoryReadingBloc._internal();
@@ -16,15 +18,12 @@ class HistoryReadingBloc {
 
 
   List<Manga> listMangaHistory = [];
-  List<Manga> listMangaHistoryRead = [];
 
   Future<void> addMangaHistory(Manga manga)  async {
     listMangaHistory.insert(0, manga);
     listMangaHistoryReading.add(listMangaHistory);
+    print('HistoryReadingBloc.addMangaHistory: ${listMangaHistory.length + 1}');
   }
-
-
-
 
 }
 

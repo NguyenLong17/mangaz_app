@@ -36,6 +36,7 @@ class MangaBloc {
   //   getMangaHot();
   // }
 
+
   Future<void> getMangas() async {
     await apiService.getMangas().then((value) {
       if (value.isNotEmpty) {

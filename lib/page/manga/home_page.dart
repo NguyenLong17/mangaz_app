@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:manga_app/bloc/history_reading_bloc.dart';
 import 'package:manga_app/bloc/manga_bloc.dart';
+import 'package:manga_app/common/hive_manager.dart';
 import 'package:manga_app/common/util/navigator.dart';
 import 'package:manga_app/model/manga.dart';
 import 'package:manga_app/page/item/item_manga_story.dart';
@@ -177,6 +178,7 @@ class _HomePageState extends State<HomePage> {
                   if (snapshot.hasData) {
                     final mangas = snapshot.data ?? [];
                     return GridView.builder(
+                      physics: const NeverScrollableScrollPhysics(),
                       shrinkWrap: true,
                       gridDelegate:
                           const SliverGridDelegateWithFixedCrossAxisCount(

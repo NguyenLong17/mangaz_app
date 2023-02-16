@@ -64,7 +64,7 @@ class _SearchPageState extends State<SearchPage> {
 
   Widget buildBody() {
     return SingleChildScrollView(
-
+      physics: ClampingScrollPhysics(),
       padding: const EdgeInsets.all(16),
       child: Column(
         children: [
@@ -95,6 +95,7 @@ class _SearchPageState extends State<SearchPage> {
               final mangas = snapshot.data ?? [];
               // final mangas = snapshot.data ?? [];
               return GridView.builder(
+                physics: const NeverScrollableScrollPhysics(),
                 shrinkWrap: true,
                 gridDelegate: const SliverGridDelegateWithFixedCrossAxisCount(
                   crossAxisCount: 2,
